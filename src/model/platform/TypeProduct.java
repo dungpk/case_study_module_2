@@ -53,8 +53,9 @@ public class TypeProduct implements Serializable {
     @Override
     public String toString() {
         return
-                "sexType=" + sexType +
-                        ", nameType='" + nameType + '\''
-                ;
+                "sexType: " + sexType +
+                ", nameType: '" + nameType + '\'' +
+                ", color: '" + color + '\'' +
+                '}';
     }
 }

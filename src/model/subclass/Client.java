@@ -33,7 +33,6 @@ public class Client extends User {
     public void setCart(List<Product> cart) {
         Cart = cart;
     }
-
     public void searchProduct(String name) {
         productClient.searchProduct(name);
     }

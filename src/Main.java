@@ -17,15 +17,107 @@ import java.util.stream.Collectors;
 
 
 public class Main {
-    static final int DEFAULT_VALUE = -1;
-    static final int EXIT = 0;
-    static final int LOG_IN = 1;
-    static final int REGISTER = 2;
-    static final int VIEW_PRODUCT = 3;
-
-    static final int SEARCH_PRODUCT =4;
 
 
+    static final String DEFAULT_VALUE = "-1";
+    static final String EXIT = "0";
+    static final String LOG_IN = "1";
+    static final String REGISTER = "2";
+    static final String VIEW_PRODUCT = "3";
+    static final String SEARCH_PRODUCT = "4";
+
+    static public ServiceManager serviceManager = new ServiceManager();
+    static Scanner scanner = new Scanner(System.in);
+
+    /*************************************************************************************
+     ******************************** MAIN ***********************************************
+     ***************************************************************************************/
+
+    public static void main(String[] args) {
+        HRM hrm = new HRM("phung khac dung","1432","dungphung","123456");
+
+        String choice = DEFAULT_VALUE;
+        while (choice!=EXIT){
+            Scanner mainScanner = new Scanner(System.in);
+            displayHomePage();
+            System.out.println("enter selection:");
+            choice = mainScanner.nextLine();
+            switch (choice) {
+                case LOG_IN:
+                    displayLogIn();
+                    break;
+                case REGISTER:
+                    registerMember();
+                    break;
+                case VIEW_PRODUCT:
+                    displayProduct();
+                    break;
+                case SEARCH_PRODUCT:
+                    searchProduct();
+                case EXIT:
+                    break;
+                default:
+                    System.out.println("Lựa chọn nhập không hợp lệ ");
+                    break;
+            }
+        }
+    }
+
+    /*************************************************************************************
+    *************************** SUPPORT FUNCTION  ***************************************
+    ***************************************************************************************/
+
+    static int searchUserInList(){
+        return 0;
+    }
+    static void searchProduct(){
+        System.out.println("Nhập từ khóa cần tìm kiếm:");
+        Scanner searchProduct = new Scanner(System.in);
+        String keyword = searchProduct.nextLine();
+        serviceManager.searchProduct(keyword);
+    }
+    static void displayTypeProduct(){
+        final String MALE = "1";
+        final String FEMALE = "2";
+        final String CHILDREN = "3";
+        String choiceTypeProduct = DEFAULT_VALUE;
+        while(choiceTypeProduct != EXIT){
+            System.out.println("""
+                ------------------
+                |1.MALE          |
+                |2.FEMALE        |
+                |3.CHILDREN      |
+                |0.Exit"         |
+                -----------------|
+                """);
+            Scanner scannerDisplayTypeProduct = new Scanner(System.in);
+            choiceTypeProduct = scannerDisplayTypeProduct.nextLine();
+            switch (choiceTypeProduct){
+                case MALE:
+                    TypeProduct typeProductMale = new TypeProduct(TypeProduct.SexType.MALE,"");
+                    serviceManager.productManager.displayByTypeSex(typeProductMale);
+                    break;
+                case FEMALE:
+                    TypeProduct typeProductFemale = new TypeProduct(TypeProduct.SexType.FEMALE,"");
+                    serviceManager.productManager.displayByTypeSex(typeProductFemale);
+                    break;
+                case CHILDREN:
+                    TypeProduct typeProductChildren = new TypeProduct(TypeProduct.SexType.CHILDREN,"");
+                    serviceManager.productManager.displayByTypeSex(typeProductChildren);
+                    break;
+                case EXIT:
+                    break;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ");
+                    break;
+            }
+        }
+    }
+
+
+    /***************************************************************************************
+     ****************************** MAIN FUNCTION ******************************************
+     ***************************************************************************************/
 
     static void displayHomePage() {
         System.out.println("""
@@ -41,51 +133,56 @@ public class Main {
 
 
     static void registerMember() {
-        ReadToFile<Product> readDataToFile = new ReadToFile<>();
-        List<Product> product = readDataToFile.readToFile("client.txt");
         System.out.println("Enter account:");
-        Scanner scanner = new Scanner(System.in);
-        String account = scanner.nextLine();
+        Scanner scannerRegister = new Scanner(System.in);
+
+        String account = scannerRegister.nextLine();
+
     }
 
     static void displayLogIn() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scannerLogIn = new Scanner(System.in);
         System.out.println("Nhập tài khoản: ");
-        String account = scanner.nextLine();
+        String account = scannerLogIn.nextLine();
         System.out.println("Nhập mật khẩu:");
-        String password = scanner.nextLine();
+        String password = scannerLogIn.nextLine();
     }
 
-    public static void main(String[] args) {
-        HRM hrm = new HRM("phung khac dung","1432","dungphung","123456");
-        ServiceManager serviceManager = new ServiceManager();
-        displayHomePage();
-        Scanner scanner = new Scanner(System.in);
-        int choice = DEFAULT_VALUE;
-        while (choice!=EXIT){
-            System.out.println("enter selection:");
-            choice = scanner.nextInt();
-            switch (choice) {
-                case LOG_IN:
-                    displayLogIn();
-                    break;
-                case REGISTER:
-                    registerMember();
-                    break;
-                case VIEW_PRODUCT:
+    static void displayProduct(){
+        final String DISPLAY_ALL_PRODUCT = "1";
+        final String  DISPLAY_TYPE_PRODUCT = "2";
+        final String DISPLAY_PRODUCT_INCREASE = "3";
+        String choiceDisplayProduct = DEFAULT_VALUE;
+        while (choiceDisplayProduct != EXIT){
+            System.out.println("""
+                ----------------------------------------
+                |1.Hiển thị toàn bộ sản phẩm           |
+                |2.Hiển thị sản phẩm theo loại         |
+                |3.Hiển thị sản phẩm theo giá tăng dần |
+                |0.EXIT                                |
+                ---------------------------------------|
+                """);
+            Scanner scannerDisplayProduct = new Scanner(System.in);
+            System.out.println("Nhập lựa chọn");
+            choiceDisplayProduct = scannerDisplayProduct.nextLine();
+            switch (choiceDisplayProduct){
+                case DISPLAY_ALL_PRODUCT:
                     serviceManager.displayAllProduct();
                     break;
-                case SEARCH_PRODUCT:
-                    TypeProduct typeProduct = new TypeProduct(TypeProduct.SexType.MALE,"Áo");
-                    serviceManager.displayTypeProduct(typeProduct);
+                case DISPLAY_TYPE_PRODUCT:
+                    displayTypeProduct();
+                    break;
+                case DISPLAY_PRODUCT_INCREASE:
+                    serviceManager.productManager.sortByPrice();
+                    break;
                 case EXIT:
                     break;
                 default:
-                    System.out.println("Lựa chọn nhập không hợp lệ ");
+                    System.out.println("Lựa chọn không hợp lệ");
                     break;
             }
         }
-
-
     }
+
+
 }

@@ -5,31 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="730bbdef-f179-4efd-9e91-f8d9d2f5065e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/case-study.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/base/IProduct.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/base/Payroll.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/base/ProductAbstract.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fileIO/ReadToFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fileIO/WriteToFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/manager/ProductManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/manager/ServiceManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/platform/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/platform/TypeProduct.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/platform/TypeUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/platform/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/revenue/Revenue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/revenue/RevenueManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/subclass/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/subclass/Carrier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/subclass/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/subclass/HRM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/subclass/StoreManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/manager/ProductManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager/ProductManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/manager/ServiceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager/ServiceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/platform/TypeProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/platform/TypeProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subclass/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/subclass/Client.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +32,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2Od4Nntcq9UAOFTT1gY8a4ZJeWa" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">

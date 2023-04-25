@@ -26,8 +26,23 @@ public class ProductManager extends ProductAbstract implements IProduct, Seriali
     }
 
     @Override
-    public void searchProduct(String name) {
-        //TODO
+    public void searchProduct(String keyword) {
+        String key = keyword.toLowerCase();
+        readProductList();
+        List<Product> searchResult = productList
+                .stream()
+                .filter(productQueue -> productQueue.getName().toLowerCase().contains(key) ||
+                        productQueue.getTypeProduct().getNameType().toLowerCase().contains(key) ||
+                        productQueue.getTypeProduct().getSexType().name().contains(keyword.toUpperCase())||
+                        productQueue.getTypeProduct().getColor().contains(key)||
+                        productQueue.getTypeProduct().getColor().toLowerCase().contains(key))
+                .toList();
+
+        if(searchResult.isEmpty()){
+            System.out.println("Không tìm thấy sản phẩm cần tìm kiếm");
+        }else{
+            System.out.println(searchResult);
+        }
     }
 
     @Override
@@ -68,8 +83,8 @@ public class ProductManager extends ProductAbstract implements IProduct, Seriali
             }
         } else {
             for (Product product : productList) {
-                if (type.getNameType().equals(product.getTypeProduct()
-                        .getNameType())) {
+                if (type.getSexType().equals(product.getTypeProduct()
+                        .getSexType())) {
                     System.out.println(product);
                 }
             }
