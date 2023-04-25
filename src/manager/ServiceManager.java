@@ -2,9 +2,7 @@ package manager;
 
 import fileIO.ReadToFile;
 import fileIO.WriteToFile;
-import model.platform.Product;
 import model.platform.TypeProduct;
-import model.revenue.RevenueManager;
 import model.subclass.*;
 
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ public class ServiceManager {
     static final String ADMIN = "admin.txt";
 
     public enum  ClassifyUser {
-        ADMIN, HRM, STORE_MANAGER, CARRIER, CLIENT;
+        ADMIN, HRM, STORE_MANAGER, CARRIER, CLIENT,EMPTY
     }
     public static String account;
 
@@ -69,8 +67,17 @@ public class ServiceManager {
         listClient = readClientToFile.readToFile(CLIENT);
     }
     public void writeClientList( ){
+        readClientList();
         writeClientToFile.writeToFile(CLIENT,listClient);
+        readClientList();
     }
+    public void addNewClient(Client client){
+        readClientList();
+        listClient.add(client);
+        writeClientList();
+    }
+
+
     public void readStoreManagerList() {
         listStoreManager = readStoreManagerToFile.readToFile(STORE_MANAGER);
     }
@@ -97,5 +104,36 @@ public class ServiceManager {
         readClientList();
         readCarrierList();
         readAdminList();
+    }
+
+    public ClassifyUser searchInUserList(String account){
+        for (Admin admin : listAdmin) {
+            if(account.equals(admin.getAccount())){
+                return ClassifyUser.ADMIN;
+            }
+        }
+        for (HRM hrm : listHRM) {
+            if(account.equals(hrm.getAccount())){
+                return ClassifyUser.HRM;
+            }
+        }
+        for (StoreManager storeManager : listStoreManager) {
+            if(account.equals(storeManager.getAccount())){
+                return ClassifyUser.STORE_MANAGER;
+            }
+        }
+
+        for (Carrier carrier : listCarrier) {
+            if(account.equals(carrier.getAccount())){
+                return ClassifyUser.CARRIER;
+            }
+        }
+        for (Client client : listClient) {
+            if(account.equals(client.getAccount())){
+                return ClassifyUser.CLIENT;
+            }
+        }
+        return  ClassifyUser.EMPTY;
+
     }
 }

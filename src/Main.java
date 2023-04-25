@@ -32,33 +32,31 @@ public class Main {
 
     public static void main(String[] args) {
 
-        HRM hrm = new HRM("Hà Văn Dũng","1234","dungha1998","123456");
-        Client client = new Client("Trần Trung Hiếu","9875","hieutran2001","123456");
-//        int choice = DEFAULT_VALUE;
-//        while (choice!=EXIT){
-//            Scanner mainScanner = new Scanner(System.in);
-//            displayHomePage();
-//            System.out.println("enter selection:");
-//            choice = Integer.parseInt(mainScanner.nextLine());
-//            switch (choice) {
-//                case LOG_IN:
-//                    displayLogIn();
-//                    break;
-//                case REGISTER:
-//                    registerMember();
-//                    break;
-//                case VIEW_PRODUCT:
-//                    displayProduct();
-//                    break;
-//                case SEARCH_PRODUCT:
-//                    searchProduct();
-//                case EXIT:
-//                    break;
-//                default:
-//                    System.out.println("Lựa chọn nhập không hợp lệ ");
-//                    break;
-//            }
-//        }
+        int choice = DEFAULT_VALUE;
+        while (choice!=EXIT){
+            Scanner mainScanner = new Scanner(System.in);
+            displayHomePage();
+            System.out.println("enter selection:");
+            choice = Integer.parseInt(mainScanner.nextLine());
+            switch (choice) {
+                case LOG_IN:
+                    displayLogIn();
+                    break;
+                case REGISTER:
+                    registerMember();
+                    break;
+                case VIEW_PRODUCT:
+                    displayProduct();
+                    break;
+                case SEARCH_PRODUCT:
+                    searchProduct();
+                case EXIT:
+                    break;
+                default:
+                    System.out.println("Lựa chọn nhập không hợp lệ ");
+                    break;
+            }
+        }
     }
 
     /*************************************************************************************
@@ -128,7 +126,14 @@ public class Main {
                 -----------------|
                 """);
     }
-
+    static Client initialClient(String account,String password){
+        Scanner  scannerInitClient = new Scanner(System.in);
+        System.out.println("Nhập tên người dùng");
+        String name = scannerInitClient.nextLine();
+        System.out.println("Nhập ID người dùng");
+        String id = scannerInitClient.nextLine();
+        return new Client(name,id,account,password);
+    }
 
     static void registerMember() {
         final int LOGIN = 1;
@@ -142,12 +147,20 @@ public class Main {
             System.out.println("Nhập lại mật khẩu: ");
             String passWordConfirm = scannerRegister.nextLine();
 
-            if(passWord.equals(passWordConfirm)){
-                System.out.println("Đã tạo tài khoản thành công");
-            }else{
-                System.out.println("Mật khẩu không khớp");
-            }
+            ServiceManager.ClassifyUser  validate = serviceManager.searchInUserList(account);
+            if(validate == ServiceManager.ClassifyUser.EMPTY){
 
+                Client client = initialClient(account,passWord);
+                serviceManager.addNewClient(client);
+                System.out.println("Tên account đã được khởi tạo");
+            }
+            else{
+                if(passWord.equals(passWordConfirm)){
+                    System.out.println("Đã tạo tài khoản thành công");
+                }else{
+                    System.out.println("Mật khẩu không khớp");
+                }
+            }
             while (choiceRegister!=LOGIN && choiceRegister!=EXIT){
                 System.out.println("""
                 ----------------------------------------
@@ -160,7 +173,6 @@ public class Main {
 
             }
         }
-
 
     }
 
