@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="730bbdef-f179-4efd-9e91-f8d9d2f5065e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hrm.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hrm.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/client.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/manager/ServiceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager/ServiceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store_manager.txt" beforeDir="false" afterPath="$PROJECT_DIR$/store_manager.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,5 +72,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/case_study$Main.ic" NAME="Main Coverage Results" MODIFIED="1682440093877" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

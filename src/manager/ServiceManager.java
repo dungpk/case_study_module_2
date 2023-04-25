@@ -5,10 +5,11 @@ import fileIO.WriteToFile;
 import model.platform.TypeProduct;
 import model.subclass.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceManager {
+public class ServiceManager implements Serializable {
     static final String CLIENT = "client.txt";
     static final String STORE_MANAGER =  "store_manager.txt";
     static final String CARRIER = "carrier.txt";
@@ -18,7 +19,9 @@ public class ServiceManager {
     public enum  ClassifyUser {
         ADMIN, HRM, STORE_MANAGER, CARRIER, CLIENT,EMPTY
     }
-    public static String account;
+    public static String accountUser;
+    public static String nameUser;
+
 
     ClassifyUser classifyUser;
      public StoreManager storeManager ;
@@ -26,77 +29,73 @@ public class ServiceManager {
      public Carrier carrier;
      public HRM hrm;
      public Admin admin;
-     public static ProductManager productManager = new ProductManager();
-    public static List<StoreManager> listStoreManager = new ArrayList<>();
-    public static List<Client> listClient = new ArrayList<>();
-    public static List<Carrier> listCarrier = new ArrayList<>();
+     public static ProductManager productManagerInService = new ProductManager();
+    public static List<StoreManager> listStoreManagerInService = new ArrayList<>();
+    public static List<Client> listClientInService = new ArrayList<>();
+    public static List<Carrier> listCarrierInService = new ArrayList<>();
 
-    public static List<HRM> listHRM = new ArrayList<>();
-    public static List<Admin> listAdmin = new ArrayList<>();
+    public static List<HRM> listHRMInService = new ArrayList<>();
+    public static List<Admin> listAdminInService = new ArrayList<>();
 
     public ServiceManager() {
         readAllUserList();
     }
-    static ReadToFile<HRM> readHRMToFile = new ReadToFile<>();
-    static WriteToFile<HRM> writeHRMToFile = new WriteToFile<>();
-    static ReadToFile<Admin> readAdminToFile = new ReadToFile<>();
-    static WriteToFile<Admin> writeAdminToFile = new WriteToFile<>();
-    static ReadToFile<Client> readClientToFile = new ReadToFile<>();
-    static WriteToFile<Client> writeClientToFile = new WriteToFile<>();
-    static ReadToFile<Carrier> readCarrierToFile = new ReadToFile<>();
-    static WriteToFile<Carrier> writeCarrierToFile = new WriteToFile<>();
-    static ReadToFile<StoreManager> readStoreManagerToFile = new ReadToFile<>();
-    static WriteToFile<StoreManager> writeStoreManagerToFile = new WriteToFile<>();
+    static ReadToFile<HRM> readHRMToFileInService = new ReadToFile<>();
+    static WriteToFile<HRM> writeHRMToFileInService = new WriteToFile<>();
+    static ReadToFile<Admin> readAdminToFileInService = new ReadToFile<>();
+    static WriteToFile<Admin> writeAdminToFileInService = new WriteToFile<>();
+    static ReadToFile<Client> readClientToFileInService = new ReadToFile<>();
+    static WriteToFile<Client> writeClientToFileInService = new WriteToFile<>();
+    static ReadToFile<Carrier> readCarrierToFileInService = new ReadToFile<>();
+    static WriteToFile<Carrier> writeCarrierToFileInService = new WriteToFile<>();
+    static ReadToFile<StoreManager> readStoreManagerToFileInService = new ReadToFile<>();
+    static WriteToFile<StoreManager> writeStoreManagerToFileInService = new WriteToFile<>();
 
     public void displayAllProduct(){
-        productManager.display(null);
+        productManagerInService.display(null);
     }
     public void searchProduct(String name){
-        productManager.searchProduct(name);
+        productManagerInService.searchProduct(name);
     }
     public void displayTypeProduct(TypeProduct typeProduct){
-        productManager.display(typeProduct);
+        productManagerInService.display(typeProduct);
     }
     public void readCarrierList() {
-        listCarrier = readCarrierToFile.readToFile(CARRIER);
+        listCarrierInService = readCarrierToFileInService.readToFile(CARRIER);
     }
     public void writeCarrierList( ){
-        writeCarrierToFile.writeToFile(CARRIER,listCarrier);
+        writeCarrierToFileInService.writeToFile(CARRIER,listCarrierInService);
     }
     public void readClientList() {
-        listClient = readClientToFile.readToFile(CLIENT);
+        listClientInService = readClientToFileInService.readToFile(CLIENT);
     }
     public void writeClientList( ){
-        readClientList();
-        writeClientToFile.writeToFile(CLIENT,listClient);
-        readClientList();
+        writeClientToFileInService.writeToFile(CLIENT,listClientInService);
     }
     public void addNewClient(Client client){
         readClientList();
-        listClient.add(client);
+        listClientInService.add(client);
         writeClientList();
     }
 
 
     public void readStoreManagerList() {
-        listStoreManager = readStoreManagerToFile.readToFile(STORE_MANAGER);
+        listStoreManagerInService = readStoreManagerToFileInService.readToFile(STORE_MANAGER);
     }
     public void writeStoreManagerList( ){
-        writeStoreManagerToFile.writeToFile(STORE_MANAGER,listStoreManager);
+        writeStoreManagerToFileInService.writeToFile(STORE_MANAGER,listStoreManagerInService);
     }
     public void readHRMList() {
-        listHRM = readHRMToFile.readToFile(HRM);
+        listHRMInService = readHRMToFileInService.readToFile(HRM);
     }
     public void writeHRMList(){
-        readAdminList();
-        writeHRMToFile.writeToFile(HRM,listHRM);
-        readAdminList();
+        writeHRMToFileInService.writeToFile(HRM,listHRMInService);
     }
     public void readAdminList() {
-        listAdmin = readAdminToFile.readToFile(ADMIN);
+        listAdminInService = readAdminToFileInService.readToFile(ADMIN);
     }
     public void writeAdminList(){
-        writeAdminToFile.writeToFile(ADMIN,listAdmin);
+        writeAdminToFileInService.writeToFile(ADMIN,listAdminInService);
     }
     private void readAllUserList(){
         readHRMList();
@@ -107,33 +106,84 @@ public class ServiceManager {
     }
 
     public ClassifyUser searchInUserList(String account){
-        for (Admin admin : listAdmin) {
+        for (Admin admin : listAdminInService) {
             if(account.equals(admin.getAccount())){
                 return ClassifyUser.ADMIN;
             }
         }
-        for (HRM hrm : listHRM) {
+        for (HRM hrm : listHRMInService) {
             if(account.equals(hrm.getAccount())){
                 return ClassifyUser.HRM;
             }
         }
-        for (StoreManager storeManager : listStoreManager) {
+        for (StoreManager storeManager : listStoreManagerInService) {
             if(account.equals(storeManager.getAccount())){
                 return ClassifyUser.STORE_MANAGER;
             }
         }
 
-        for (Carrier carrier : listCarrier) {
+        for (Carrier carrier : listCarrierInService) {
             if(account.equals(carrier.getAccount())){
                 return ClassifyUser.CARRIER;
             }
         }
-        for (Client client : listClient) {
+        for (Client client : listClientInService) {
             if(account.equals(client.getAccount())){
                 return ClassifyUser.CLIENT;
             }
         }
         return  ClassifyUser.EMPTY;
 
+    }
+
+    public ClassifyUser validateTypeAccount(String account,String password){
+        for (Admin admin : listAdminInService) {
+            if(account.equals(admin.getAccount())){
+                if(admin.getPassword().equals(password)){
+                    return ClassifyUser.ADMIN;
+                }else{
+                    return null;
+                }
+
+            }
+        }
+        for (HRM hrm : listHRMInService) {
+            if(account.equals(hrm.getAccount())){
+                if(hrm.getPassword().equals(password)){
+                    return ClassifyUser.HRM;
+                }else{
+                    return null;
+                }
+            }
+        }
+        for (StoreManager storeManager : listStoreManagerInService) {
+            if(account.equals(storeManager.getAccount())){
+                if(storeManager.getPassword().equals(password)){
+                    return ClassifyUser.STORE_MANAGER;
+                }else{
+                    return null;
+                }
+            }
+        }
+
+        for (Carrier carrier : listCarrierInService) {
+            if(account.equals(carrier.getAccount())){
+                if(carrier.getPassword().equals(password)){
+                    return ClassifyUser.CARRIER;
+                }else{
+                    return null;
+                }
+            }
+        }
+        for (Client client : listClientInService) {
+            if(account.equals(client.getAccount())){
+                if(client.getPassword().equals(password)){
+                    return ClassifyUser.CLIENT;
+                }else{
+                    return null;
+                }
+            }
+        }
+        return  ClassifyUser.EMPTY;
     }
 }

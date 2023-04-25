@@ -31,6 +31,11 @@ public class Main {
      ***************************************************************************************/
 
     public static void main(String[] args) {
+        System.out.println(serviceManager.listClientInService);
+        System.out.println(serviceManager.listCarrierInService);
+        System.out.println(serviceManager.listHRMInService);
+        System.out.println(serviceManager.listStoreManagerInService);
+        System.out.println(serviceManager.listAdminInService);
 
         int choice = DEFAULT_VALUE;
         while (choice!=EXIT){
@@ -91,15 +96,15 @@ public class Main {
             switch (choiceTypeProduct){
                 case MALE:
                     TypeProduct typeProductMale = new TypeProduct(TypeProduct.SexType.MALE,"");
-                    serviceManager.productManager.displayByTypeSex(typeProductMale);
+                    serviceManager.productManagerInService.displayByTypeSex(typeProductMale);
                     break;
                 case FEMALE:
                     TypeProduct typeProductFemale = new TypeProduct(TypeProduct.SexType.FEMALE,"");
-                    serviceManager.productManager.displayByTypeSex(typeProductFemale);
+                    serviceManager.productManagerInService.displayByTypeSex(typeProductFemale);
                     break;
                 case CHILDREN:
                     TypeProduct typeProductChildren = new TypeProduct(TypeProduct.SexType.CHILDREN,"");
-                    serviceManager.productManager.displayByTypeSex(typeProductChildren);
+                    serviceManager.productManagerInService.displayByTypeSex(typeProductChildren);
                     break;
                 case EXIT:
                     break;
@@ -108,6 +113,14 @@ public class Main {
                     break;
             }
         }
+    }
+    static Client initialClient(String account,String password){
+        Scanner  scannerInitClient = new Scanner(System.in);
+        System.out.println("Nhập tên người dùng");
+        String name = scannerInitClient.nextLine();
+        System.out.println("Nhập ID người dùng");
+        String id = scannerInitClient.nextLine();
+        return new Client(name,id,account,password);
     }
 
 
@@ -126,14 +139,6 @@ public class Main {
                 -----------------|
                 """);
     }
-    static Client initialClient(String account,String password){
-        Scanner  scannerInitClient = new Scanner(System.in);
-        System.out.println("Nhập tên người dùng");
-        String name = scannerInitClient.nextLine();
-        System.out.println("Nhập ID người dùng");
-        String id = scannerInitClient.nextLine();
-        return new Client(name,id,account,password);
-    }
 
     static void registerMember() {
         final int LOGIN = 1;
@@ -148,19 +153,20 @@ public class Main {
             String passWordConfirm = scannerRegister.nextLine();
 
             ServiceManager.ClassifyUser  validate = serviceManager.searchInUserList(account);
-            if(validate == ServiceManager.ClassifyUser.EMPTY){
-
-                Client client = initialClient(account,passWord);
-                serviceManager.addNewClient(client);
-                System.out.println("Tên account đã được khởi tạo");
-            }
-            else{
-                if(passWord.equals(passWordConfirm)){
-                    System.out.println("Đã tạo tài khoản thành công");
+            if(passWord.equals(passWordConfirm)){
+                if(validate == ServiceManager.ClassifyUser.EMPTY){
+                    Client client =initialClient(account,passWord);
+                    serviceManager.addNewClient(client);
+                    System.out.println("Account đã được khởi tạo thành công! ");
                 }else{
-                    System.out.println("Mật khẩu không khớp");
+                    System.out.println(" tên Account đã có người sử dụng");
                 }
+
+            }else{
+                System.out.println("Mật khẩu không khớp");
             }
+
+
             while (choiceRegister!=LOGIN && choiceRegister!=EXIT){
                 System.out.println("""
                 ----------------------------------------
@@ -182,6 +188,29 @@ public class Main {
         String account = scannerLogIn.nextLine();
         System.out.println("Nhập mật khẩu:");
         String password = scannerLogIn.nextLine();
+
+        ServiceManager.ClassifyUser loginValidate = serviceManager.validateTypeAccount(account,password);
+        System.out.println(loginValidate);
+        switch (loginValidate){
+            case ADMIN :
+                System.out.println("Hello ADMIN: "+ account);
+                break;
+            case HRM:
+                System.out.println("HR: "+account);
+                break;
+            case STORE_MANAGER:
+                System.out.println("store manager: "+account);
+                break;
+            case CARRIER:
+                System.out.println("carrier: "+account);
+                break;
+            case CLIENT:
+                System.out.println("client: "+account);
+                break;
+            case EMPTY:
+                System.out.println("Sai tài khoản hoặc mật khẩu");
+        }
+
     }
 
     static void displayProduct(){
@@ -209,7 +238,7 @@ public class Main {
                     displayTypeProduct();
                     break;
                 case DISPLAY_PRODUCT_INCREASE:
-                    serviceManager.productManager.sortByPrice();
+                    serviceManager.productManagerInService.sortByPrice();
                     break;
                 case EXIT:
                     break;
