@@ -17,28 +17,27 @@ public class ServiceManager {
     static final String HRM = "hrm.txt";
     static final String ADMIN = "admin.txt";
 
-
     public enum  ClassifyUser {
         ADMIN, HRM, STORE_MANAGER, CARRIER, CLIENT;
     }
     public static String account;
 
     ClassifyUser classifyUser;
-    static public StoreManager storeManager ;
-    static public Client client;
-    static public Carrier carrier;
-    static public HRM hrm;
-    static public Admin admin;
-    static public ProductManager productManager = new ProductManager();
-    static List<StoreManager> listStoreManager = new ArrayList<>();
-    static List<Client> listClient = new ArrayList<>();
-    static List<Carrier> listCarrier = new ArrayList<>();
+     public StoreManager storeManager ;
+     public Client client;
+     public Carrier carrier;
+     public HRM hrm;
+     public Admin admin;
+     public static ProductManager productManager = new ProductManager();
+    public static List<StoreManager> listStoreManager = new ArrayList<>();
+    public static List<Client> listClient = new ArrayList<>();
+    public static List<Carrier> listCarrier = new ArrayList<>();
 
-    static List<HRM> listHRM = new ArrayList<>();
-    static List<Admin> listAdmin = new ArrayList<>();
+    public static List<HRM> listHRM = new ArrayList<>();
+    public static List<Admin> listAdmin = new ArrayList<>();
 
     public ServiceManager() {
-
+        readAllUserList();
     }
     static ReadToFile<HRM> readHRMToFile = new ReadToFile<>();
     static WriteToFile<HRM> writeHRMToFile = new WriteToFile<>();
@@ -60,34 +59,36 @@ public class ServiceManager {
     public void displayTypeProduct(TypeProduct typeProduct){
         productManager.display(typeProduct);
     }
-    private void readCarrierList() {
+    public void readCarrierList() {
         listCarrier = readCarrierToFile.readToFile(CARRIER);
     }
-    private void writeCarrierList( ){
+    public void writeCarrierList( ){
         writeCarrierToFile.writeToFile(CARRIER,listCarrier);
     }
-    private void readClientList() {
+    public void readClientList() {
         listClient = readClientToFile.readToFile(CLIENT);
     }
-    private void writeClientList( ){
+    public void writeClientList( ){
         writeClientToFile.writeToFile(CLIENT,listClient);
     }
-    private void readStoreManagerList() {
+    public void readStoreManagerList() {
         listStoreManager = readStoreManagerToFile.readToFile(STORE_MANAGER);
     }
-    private void writeStoreManagerList( ){
+    public void writeStoreManagerList( ){
         writeStoreManagerToFile.writeToFile(STORE_MANAGER,listStoreManager);
     }
-    private void readHRMList() {
+    public void readHRMList() {
         listHRM = readHRMToFile.readToFile(HRM);
     }
-    private void writeHRMList(){
+    public void writeHRMList(){
+        readAdminList();
         writeHRMToFile.writeToFile(HRM,listHRM);
+        readAdminList();
     }
-    private void readAdminList() {
+    public void readAdminList() {
         listAdmin = readAdminToFile.readToFile(ADMIN);
     }
-    private void writeAdminList(){
+    public void writeAdminList(){
         writeAdminToFile.writeToFile(ADMIN,listAdmin);
     }
     private void readAllUserList(){

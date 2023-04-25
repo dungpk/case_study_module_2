@@ -29,7 +29,7 @@ public class HRM extends User implements Serializable, Payroll {
     static final String STORE_MANAGER =  "store_manager.txt";
     static final String CARRIER = "carrier.txt";
 
-    static RevenueManager HRMRevenue = new RevenueManager();
+    public RevenueManager HRMRevenue = new RevenueManager();
     static List<StoreManager> listStoreManager = new ArrayList<>();
     static List<Client> listClient = new ArrayList<>();
     static List<Carrier> listCarrier = new ArrayList<>();

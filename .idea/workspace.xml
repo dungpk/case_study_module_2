@@ -6,8 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="730bbdef-f179-4efd-9e91-f8d9d2f5065e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin.txt" beforeDir="false" afterPath="$PROJECT_DIR$/admin.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/client.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/manager/ServiceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager/ServiceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/platform/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/platform/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subclass/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/subclass/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subclass/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/subclass/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/subclass/HRM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/subclass/HRM.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,5 +65,16 @@
       <updated>1681877088367</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

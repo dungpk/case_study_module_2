@@ -7,10 +7,7 @@ import model.platform.TypeProduct;
 import model.platform.User;
 import model.revenue.Revenue;
 import model.revenue.RevenueManager;
-import model.subclass.Carrier;
-import model.subclass.Client;
-import model.subclass.HRM;
-import model.subclass.StoreManager;
+import model.subclass.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,33 +31,34 @@ public class Main {
      ***************************************************************************************/
 
     public static void main(String[] args) {
-        HRM hrm = new HRM("phung khac dung","1432","dungphung","123456");
 
-        int choice = DEFAULT_VALUE;
-        while (choice!=EXIT){
-            Scanner mainScanner = new Scanner(System.in);
-            displayHomePage();
-            System.out.println("enter selection:");
-            choice = Integer.parseInt(mainScanner.nextLine());
-            switch (choice) {
-                case LOG_IN:
-                    displayLogIn();
-                    break;
-                case REGISTER:
-                    registerMember();
-                    break;
-                case VIEW_PRODUCT:
-                    displayProduct();
-                    break;
-                case SEARCH_PRODUCT:
-                    searchProduct();
-                case EXIT:
-                    break;
-                default:
-                    System.out.println("Lựa chọn nhập không hợp lệ ");
-                    break;
-            }
-        }
+        HRM hrm = new HRM("Hà Văn Dũng","1234","dungha1998","123456");
+        Client client = new Client("Trần Trung Hiếu","9875","hieutran2001","123456");
+//        int choice = DEFAULT_VALUE;
+//        while (choice!=EXIT){
+//            Scanner mainScanner = new Scanner(System.in);
+//            displayHomePage();
+//            System.out.println("enter selection:");
+//            choice = Integer.parseInt(mainScanner.nextLine());
+//            switch (choice) {
+//                case LOG_IN:
+//                    displayLogIn();
+//                    break;
+//                case REGISTER:
+//                    registerMember();
+//                    break;
+//                case VIEW_PRODUCT:
+//                    displayProduct();
+//                    break;
+//                case SEARCH_PRODUCT:
+//                    searchProduct();
+//                case EXIT:
+//                    break;
+//                default:
+//                    System.out.println("Lựa chọn nhập không hợp lệ ");
+//                    break;
+//            }
+//        }
     }
 
     /*************************************************************************************

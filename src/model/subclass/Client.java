@@ -6,10 +6,11 @@ import model.platform.TypeUser;
 import model.platform.User;
 import model.revenue.RevenueManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends User {
+public class Client extends User implements Serializable {
     private List<Product> Cart = new ArrayList<>();
     static ProductManager productClient = new ProductManager();
 
