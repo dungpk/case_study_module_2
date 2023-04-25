@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 public class Main {
 
 
-    static final String DEFAULT_VALUE = "-1";
-    static final String EXIT = "0";
-    static final String LOG_IN = "1";
-    static final String REGISTER = "2";
-    static final String VIEW_PRODUCT = "3";
-    static final String SEARCH_PRODUCT = "4";
+    static final int DEFAULT_VALUE = -1;
+    static final int EXIT = 0;
+    static final int LOG_IN =  1;
+    static final int REGISTER = 2;
+    static final int VIEW_PRODUCT = 3;
+    static final int SEARCH_PRODUCT = 4;
 
     static public ServiceManager serviceManager = new ServiceManager();
     static Scanner scanner = new Scanner(System.in);
@@ -36,12 +36,12 @@ public class Main {
     public static void main(String[] args) {
         HRM hrm = new HRM("phung khac dung","1432","dungphung","123456");
 
-        String choice = DEFAULT_VALUE;
+        int choice = DEFAULT_VALUE;
         while (choice!=EXIT){
             Scanner mainScanner = new Scanner(System.in);
             displayHomePage();
             System.out.println("enter selection:");
-            choice = mainScanner.nextLine();
+            choice = Integer.parseInt(mainScanner.nextLine());
             switch (choice) {
                 case LOG_IN:
                     displayLogIn();
@@ -77,10 +77,10 @@ public class Main {
         serviceManager.searchProduct(keyword);
     }
     static void displayTypeProduct(){
-        final String MALE = "1";
-        final String FEMALE = "2";
-        final String CHILDREN = "3";
-        String choiceTypeProduct = DEFAULT_VALUE;
+        final int MALE = 1;
+        final int FEMALE = 2;
+        final int CHILDREN = 3;
+        int choiceTypeProduct = DEFAULT_VALUE;
         while(choiceTypeProduct != EXIT){
             System.out.println("""
                 ------------------
@@ -91,7 +91,7 @@ public class Main {
                 -----------------|
                 """);
             Scanner scannerDisplayTypeProduct = new Scanner(System.in);
-            choiceTypeProduct = scannerDisplayTypeProduct.nextLine();
+            choiceTypeProduct = Integer.parseInt(scannerDisplayTypeProduct.nextLine());
             switch (choiceTypeProduct){
                 case MALE:
                     TypeProduct typeProductMale = new TypeProduct(TypeProduct.SexType.MALE,"");
@@ -133,10 +133,36 @@ public class Main {
 
 
     static void registerMember() {
-        System.out.println("Enter account:");
+        final int LOGIN = 1;
         Scanner scannerRegister = new Scanner(System.in);
+        int choiceRegister = DEFAULT_VALUE;
+        while(choiceRegister!=EXIT){
+            System.out.println("Enter account:");
+            String account = scannerRegister.nextLine();
+            System.out.println("Nhập mật khẩu: ");
+            String passWord = scannerRegister.nextLine();
+            System.out.println("Nhập lại mật khẩu: ");
+            String passWordConfirm = scannerRegister.nextLine();
 
-        String account = scannerRegister.nextLine();
+            if(passWord.equals(passWordConfirm)){
+                System.out.println("Đã tạo tài khoản thành công");
+            }else{
+                System.out.println("Mật khẩu không khớp");
+            }
+
+            while (choiceRegister!=LOGIN && choiceRegister!=EXIT){
+                System.out.println("""
+                ----------------------------------------
+                |1.Tạo lại tài khoản                   |
+                |0.EXIT                                |
+                ---------------------------------------|
+                """);
+                System.out.println("Nhập lựa chọn");
+                choiceRegister = Integer.parseInt(scannerRegister.nextLine());
+
+            }
+        }
+
 
     }
 
@@ -149,10 +175,10 @@ public class Main {
     }
 
     static void displayProduct(){
-        final String DISPLAY_ALL_PRODUCT = "1";
-        final String  DISPLAY_TYPE_PRODUCT = "2";
-        final String DISPLAY_PRODUCT_INCREASE = "3";
-        String choiceDisplayProduct = DEFAULT_VALUE;
+        final int DISPLAY_ALL_PRODUCT = 1;
+        final int  DISPLAY_TYPE_PRODUCT = 2;
+        final int DISPLAY_PRODUCT_INCREASE = 3;
+        int choiceDisplayProduct = DEFAULT_VALUE;
         while (choiceDisplayProduct != EXIT){
             System.out.println("""
                 ----------------------------------------
@@ -164,7 +190,7 @@ public class Main {
                 """);
             Scanner scannerDisplayProduct = new Scanner(System.in);
             System.out.println("Nhập lựa chọn");
-            choiceDisplayProduct = scannerDisplayProduct.nextLine();
+            choiceDisplayProduct = Integer.parseInt(scannerDisplayProduct.nextLine());
             switch (choiceDisplayProduct){
                 case DISPLAY_ALL_PRODUCT:
                     serviceManager.displayAllProduct();
