@@ -28,7 +28,6 @@ public class User implements Serializable {
     public TypeUser getType() {
         return type;
     }
-
     public void setType(TypeUser type) {
         this.type = type;
     }
@@ -36,7 +35,6 @@ public class User implements Serializable {
     public String getAccount() {
         return account;
     }
-
     public void setAccount(String account) {
         this.account = account;
     }
@@ -48,8 +46,6 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
     public User(String name, String id, TypeUser type, String account, String password) {
         this.name = name;
         this.id = id;
@@ -57,17 +53,14 @@ public class User implements Serializable {
         this.account = account;
         this.password = password;
     }
-
     public User(String name, String id, String account, String password) {
         this.name = name;
         this.id = id;
         this.account = account;
         this.password = password;
     }
-
     public User() {
     }
-
     @Override
     public String toString() {
         return

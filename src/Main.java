@@ -26,16 +26,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        loadingThread.start();
-//        System.out.println(ServiceManager.listClientInService);
-//        System.out.println(ServiceManager.listCarrierInService);
-//        System.out.println(ServiceManager.listHRMInService);
-//        System.out.println(ServiceManager.listStoreManagerInService);
-//        System.out.println(ServiceManager.listAdminInService);
-        for (Client client : ServiceManager.listClientInService) {
-            System.out.println(client.getCart());
-        }
-
+        loadingThread.start();
         int choice = DEFAULT_VALUE;
         while (choice != EXIT) {
             Scanner mainScanner = new Scanner(System.in);
@@ -67,55 +58,85 @@ public class Main {
      *************************** SUPPORT FUNCTION  ***************************************
      ***************************************************************************************/
 
-    static void clientAddProductToCart(){
+    static void odderCompletion(){
+        for (Client client : serviceManager.listClientInService) {
+            System.out.println("Name : "+client.getName());
+            System.out.println("===============================");
+            System.out.println(client.Cart);
+            System.out.println("===============================");
+        }
+        boolean check = false;
+        double value = 0;
+        System.out.printf("Nhập tài khoản khách hàng muốn được hoàn thành đơn:");
+        String account = scanner.nextLine();
+        for (Client client : serviceManager.listClientInService) {
+            if(client.getAccount().equals(account)){
+                check = true;
+                value = client.calTotalMoney();
+                client.Cart.clear();
+                break;
+            }
+        }
+        if(check){
+            serviceManager.hrm = new HRM("temp","052275252","temp","temp");
+            serviceManager.hrm.hrmAddNewRevenue(value);
+            System.out.println("Đơn hàng đã được thanh toán");
+        }else{
+            System.out.println("Không tìm thấy khách hàng");
+        }
+        serviceManager.writeClientList();
+    }
+
+    static void clientAddProductToCart() {
         System.out.println("Nhập tên sản phẩm: ");
         String name = scanner.nextLine();
         System.out.println("Nhập số lượng sản phẩm: ");
         int quantity = Integer.parseInt(scanner.nextLine());
+        int index = -1;
         for (Client client : serviceManager.listClientInService) {
-            if(client.getAccount().equals(serviceManager.client.getAccount())){
-                client.addToCart(name,quantity);
+            if (client.getAccount().equals(serviceManager.client.getAccount())) {
+                client.addToCart(name, quantity);
+                serviceManager.writeClientList();
+                break;
             }
         }
-        serviceManager.readClientList();
-        serviceManager.writeClientList();
-
     }
-    static void removeProduct(){
+
+    static void removeProduct() {
         System.out.println("Nhập tên sản phẩm cần xóa: ");
         String name = scanner.nextLine();
         System.out.println("Bạn có chắc chắn muốn xóa:");
         System.out.println("1.YES");
         System.out.println("THE REST OF: NO");
         int choiceRemoveProduct = Integer.parseInt(scanner.nextLine());
-        if(choiceRemoveProduct == 1){
+        if (choiceRemoveProduct == 1) {
             serviceManager.storeManager.managerRemoveProduct(name);
-        }else{
+        } else {
             System.out.println("Hoàn tác! ");
         }
 
     }
 
-    static void updateQuantityProduct(){
+    static void updateQuantityProduct() {
         System.out.println("Nhập tên sản phẩm");
         String name = scanner.nextLine();
         System.out.println("Nhập số lượng sản phẩm");
         int quantity = Integer.parseInt(scanner.nextLine());
-        serviceManager.storeManager.managerUpdateQuantity(name,quantity);
+        serviceManager.storeManager.managerUpdateQuantity(name, quantity);
     }
 
-    static void updatePriceProduct(){
+    static void updatePriceProduct() {
         System.out.println("Nhập tên sản phẩm");
         String name = scanner.nextLine();
         System.out.println("Nhập giá sản phẩm");
         int price = Integer.parseInt(scanner.nextLine());
-        serviceManager.storeManager.managerUpdateQuantity(name,price);
+        serviceManager.storeManager.managerUpdateQuantity(name, price);
     }
 
-    static void storeManagerAddProduct(){
-        final int MALE =1;
-        final int FEMALE =2;
-        final int CHILDREN =3;
+    static void storeManagerAddProduct() {
+        final int MALE = 1;
+        final int FEMALE = 2;
+        final int CHILDREN = 3;
         System.out.println("Nhập tên sản phẩm: ");
         String name = scanner.nextLine();
         System.out.println("Nhập size sản phẩm: ");
@@ -131,7 +152,7 @@ public class Main {
         System.out.println("3.CHILDREN");
         int type = Integer.parseInt(scanner.nextLine());
         TypeProduct.SexType sexType;
-        switch (type){
+        switch (type) {
             case MALE:
                 sexType = TypeProduct.SexType.MALE;
                 break;
@@ -147,22 +168,23 @@ public class Main {
                 return;
         }
 
-        Product product = new Product(name, size,  price,  quantity, new
-                TypeProduct(sexType,"Áo","xanh"));
+        Product product = new Product(name, size, price, quantity, new
+                TypeProduct(sexType, "Áo", "xanh"));
         serviceManager.storeManager.managerAddProduct(product);
     }
-    static void changePasswordHRM(){
+
+    static void changePasswordHRM() {
         serviceManager.readClientList();
         for (HRM hrm : serviceManager.listHRMInService) {
-            if(hrm.getAccount().equals(serviceManager.accountUser)){
+            if (hrm.getAccount().equals(serviceManager.accountUser)) {
                 System.out.println("Nhập mật khẩu mới");
                 String password = scanner.nextLine();
                 System.out.println("Nhập lại mật khẩu mới");
                 String passwordConfirm = scanner.nextLine();
 
-                if(!password.equals(passwordConfirm)){
+                if (!password.equals(passwordConfirm)) {
                     System.out.println("Mật khẩu không trùng khớp");
-                }else{
+                } else {
                     hrm.setPassword(password);
                     serviceManager.writeHRMList();
                     System.out.println("Thay đổi mật khẩu thành công");
@@ -171,14 +193,14 @@ public class Main {
         }
     }
 
-    static void revenueManager(){
-        final int SALARY_MEMBER =1;
-        final int REVENUE_CREATION =2;
-        final int DISPLAY_DAY_REVENUE =3;
-        final int TOTAL_REVENUE =4;
-        final int RESET_REVENUE =5;
+    static void revenueManager() {
+        final int SALARY_MEMBER = 1;
+        final int REVENUE_CREATION = 2;
+        final int DISPLAY_DAY_REVENUE = 3;
+        final int TOTAL_REVENUE = 4;
+        final int RESET_REVENUE = 5;
         int optionRevenueManager = DEFAULT_VALUE;
-        while (optionRevenueManager!=EXIT){
+        while (optionRevenueManager != EXIT) {
             System.out.println("""
                     ----------------------------------------
                     |1.Hiển thị lương các thành viên       |
@@ -190,7 +212,7 @@ public class Main {
                     ---------------------------------------|
                     """);
             optionRevenueManager = Integer.parseInt(scanner.nextLine());
-            switch(optionRevenueManager){
+            switch (optionRevenueManager) {
                 case SALARY_MEMBER:
                     serviceManager.hrm.displaySalaryAllEmployee();
                     break;
@@ -201,7 +223,7 @@ public class Main {
                     serviceManager.hrm.hrmDisplayRevenue();
                     break;
                 case TOTAL_REVENUE:
-                    System.out.println("Tổng Doanh thu: "+serviceManager.hrm.totalRevenue());
+                    System.out.println("Tổng Doanh thu: " + serviceManager.hrm.totalRevenue());
                     break;
                 case RESET_REVENUE:
                     serviceManager.hrm.hrmClearRevenue();
@@ -215,6 +237,7 @@ public class Main {
             }
         }
     }
+
     static void updateUserInformation() {
         System.out.println("Nhập account cần cập nhật thông tin");
         String account = scanner.nextLine();
@@ -431,7 +454,7 @@ public class Main {
         serviceManager.storeManager = new StoreManager
                 (ServiceManager.nameUser, "temp_id", ServiceManager.accountUser, "temp_password");
         int optionStoreHandleHandle = DEFAULT_VALUE;
-        while(optionStoreHandleHandle!=EXIT){
+        while (optionStoreHandleHandle != EXIT) {
             System.out.println("""
                     ----------------------------------------
                     |1.Thêm sản phẩm                       |
@@ -444,7 +467,7 @@ public class Main {
                     """);
             System.out.println("Nhập lựa chọn");
             optionStoreHandleHandle = Integer.parseInt(scanner.nextLine());
-            switch (optionStoreHandleHandle){
+            switch (optionStoreHandleHandle) {
                 case ADD_PRODUCT:
                     storeManagerAddProduct();
                     break;
@@ -462,30 +485,54 @@ public class Main {
                 default:
                     System.out.println("Lựa chọn không hợp lệ");
             }
-
         }
     }
 
     static void carrierHandleLoginSuccess() {
-        //TODO
+        final int ORDER_COMPLETION = 1;
+        serviceManager.carrier = new Carrier
+                (ServiceManager.nameUser, "temp_id", ServiceManager.accountUser, "temp_password");
+        System.out.println(ServiceManager.nameUser + ServiceManager.accountUser);
+        int optionCarrierHandle = DEFAULT_VALUE;
+        while(optionCarrierHandle!=EXIT){
+            System.out.println("""
+                    ----------------------------------------
+                    |1.Hoàn thành đơn đặt hàng             |   
+                    |2.Đổi mật khẩu                        |
+                    |0.LOG OUT                              |
+                    ---------------------------------------|
+                    """);
+            System.out.println("Nhập lựa chọn: ");
+            optionCarrierHandle = Integer.parseInt(scanner.nextLine());
+            switch (optionCarrierHandle){
+                case ORDER_COMPLETION:
+                    odderCompletion();
+                    break;
+                case EXIT:
+                    break;
+                default:
+                    System.out.printf("Lựa chọn chưa hợp lệ");
+            }
+        }
     }
 
     static void clientHandleLoginSuccess() {
         final int ADD_FINAL = 1;
         serviceManager.client = new Client
                 (ServiceManager.nameUser, "temp_id", ServiceManager.accountUser, "temp_password");
-        System.out.println(ServiceManager.nameUser+ServiceManager.accountUser);
+        System.out.println(ServiceManager.nameUser + ServiceManager.accountUser);
         int optionClientHandle = DEFAULT_VALUE;
-        while(optionClientHandle!=EXIT){
+        while (optionClientHandle != EXIT) {
             System.out.println("""
                     ----------------------------------------
                     |1.Thêm sản phẩm vào giỏ               |
+                    |2.Đổi mật khẩu                        |
                     |0.LOGOUT                              |
                     ---------------------------------------|
                     """);
             System.out.println("Nhập lựa chọn: ");
             optionClientHandle = Integer.parseInt(scanner.nextLine());
-            switch (optionClientHandle){
+            switch (optionClientHandle) {
                 case ADD_FINAL:
                     clientAddProductToCart();
                     break;
@@ -591,7 +638,7 @@ public class Main {
             while (choiceRegister != LOGIN && choiceRegister != EXIT) {
                 System.out.println("""
                         ----------------------------------------
-                        |1.Tạo lại tài khoản                   |
+                        |1.Tạo lại tài khoản Client            |
                         |0.EXIT                                |
                         ---------------------------------------|
                         """);
@@ -636,7 +683,7 @@ public class Main {
                 default:
                     break;
             }
-        }else {
+        } else {
             System.out.println("Sai tai khoan hoac mat khau");
         }
 
@@ -683,7 +730,7 @@ public class Main {
         public void run() {
             int percent = 0;
             while (percent <= 100) {
-                int numBars = percent / 2; // tính toán số lượng ký tự "|" cần in ra
+                int numBars = percent / 5; // tính toán số lượng ký tự "|" cần in ra
                 String bars = String.join("", Collections.nCopies(numBars, "\u001B[33m|\u001B[0m")); // tạo chuỗi chứa ký tự "|"
                 System.out.print("\r" + bars + " " + percent + "%"); // in ra chuỗi và phần trăm hoàn thành
                 percent++; // tăng biến số phần trăm hoàn thành lên 1

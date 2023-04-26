@@ -9,6 +9,7 @@ import model.revenue.RevenueManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 public class Client extends User implements Serializable {
     public List<Product> Cart = new ArrayList<>();
@@ -44,25 +45,30 @@ public class Client extends User implements Serializable {
         if(productClient.getIndexByName(name) == -1){
             System.out.println("Không tồn tại sản phẩm: "+ name);
         }else{
-
             for (Product product : productClient.productList) {
                 if(product.getName().equals(name)){
                     if(quantity>product.getQuantity()){
                         System.out.println("Số lượng sản phẩm không đủ "+ quantity);
+                        break;
                     }else{
                         Product pr = product;
                         pr.setQuantity(quantity);
                         Cart.add(pr);
                         System.out.println("Sản phẩm được thêm thành công");
+                        break;
                     }
 
-                }else{
-                    System.out.println("Không tìm thấy sản phẩm");
                 }
-                break;
             }
         }
+    }
 
+    public double calTotalMoney(){
+        int sum = 0;
+        for (Product product : Cart) {
+            sum += product.getPrice();
+        }
+        return sum;
     }
     
 
