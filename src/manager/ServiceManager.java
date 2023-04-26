@@ -69,7 +69,7 @@ public class ServiceManager implements Serializable {
     public void readClientList() {
         listClientInService = readClientToFileInService.readToFile(CLIENT);
     }
-    public void writeClientList( ){
+    public void writeClientList(){
         writeClientToFileInService.writeToFile(CLIENT,listClientInService);
     }
     public void addNewClient(Client client){

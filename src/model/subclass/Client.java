@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client extends User implements Serializable {
-    private List<Product> Cart = new ArrayList<>();
-    static ProductManager productClient = new ProductManager();
+    public List<Product> Cart = new ArrayList<>();
+    public ProductManager productClient = new ProductManager();
 
     public Client(String name, String id, String account, String password) {
         super(name, id, new TypeUser(TypeUser.ClassifyUser.CLIENT, TypeUser.Sex.MALE), account, password);
@@ -44,6 +44,7 @@ public class Client extends User implements Serializable {
         if(productClient.getIndexByName(name) == -1){
             System.out.println("Không tồn tại sản phẩm: "+ name);
         }else{
+
             for (Product product : productClient.productList) {
                 if(product.getName().equals(name)){
                     if(quantity>product.getQuantity()){
@@ -54,12 +55,16 @@ public class Client extends User implements Serializable {
                         Cart.add(pr);
                         System.out.println("Sản phẩm được thêm thành công");
                     }
-                    break;
+
+                }else{
+                    System.out.println("Không tìm thấy sản phẩm");
                 }
+                break;
             }
         }
 
     }
+    
 
     @Override
     public String toString() {

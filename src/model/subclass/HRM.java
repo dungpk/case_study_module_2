@@ -12,6 +12,7 @@ import model.revenue.RevenueManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.CancellationException;
 
 public class HRM extends User implements Serializable, Payroll {
@@ -279,7 +280,44 @@ public class HRM extends User implements Serializable, Payroll {
         }
     }
 
+    public void displaySalaryAllEmployee(){
+        readClientList();
+        readCarrierList();
+        readStoreManagerList();
+        for (Carrier carrier : listCarrier) {
+            System.out.println("name: "+carrier.getName()+"| Salary"+carrier.payroll());
+
+        }
+        for (StoreManager storeManager : listStoreManager) {
+            System.out.println("name: "+storeManager.getName()+"| Salary: "+storeManager.payroll()+"VND");
+
+        }
+    }
+
     public void searchNameUser(String namUser){
         //TODO
+    }
+
+    public void timeKeeping(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập account cần chấm công: ");
+        String account = scanner.nextLine();
+        readCarrierList();
+        readStoreManagerList();
+        for (StoreManager storeManager : listStoreManager) {
+            if(account.equals(storeManager.getAccount())){
+                storeManager.setWorkingDay(storeManager.getWorkingDay()+1);
+                writeStoreManagerList();
+                System.out.println("Đã chấm công cho "+ storeManager.getAccount());
+            }
+        }
+        for (Carrier carrier : listCarrier) {
+            if(account.equals(carrier.getAccount())){
+                carrier.setWorkingDay(carrier.getWorkingDay()+1);
+                writeCarrierList();
+                writeCarrierList();
+                System.out.println("Đã chấm công cho "+ carrier.getAccount());
+            }
+        }
     }
 }

@@ -1,4 +1,6 @@
+import manager.ProductManager;
 import manager.ServiceManager;
+import model.platform.Product;
 import model.platform.TypeProduct;
 import model.platform.User;
 import model.subclass.*;
@@ -23,16 +25,19 @@ public class Main {
      ***************************************************************************************/
 
     public static void main(String[] args) {
-        loadingThread.start();
-        System.out.println(ServiceManager.listClientInService);
-        System.out.println(ServiceManager.listCarrierInService);
-        System.out.println(ServiceManager.listHRMInService);
-        System.out.println(ServiceManager.listStoreManagerInService);
-        System.out.println(ServiceManager.listAdminInService);
+
+//        loadingThread.start();
+//        System.out.println(ServiceManager.listClientInService);
+//        System.out.println(ServiceManager.listCarrierInService);
+//        System.out.println(ServiceManager.listHRMInService);
+//        System.out.println(ServiceManager.listStoreManagerInService);
+//        System.out.println(ServiceManager.listAdminInService);
+        for (Client client : ServiceManager.listClientInService) {
+            System.out.println(client.getCart());
+        }
 
         int choice = DEFAULT_VALUE;
         while (choice != EXIT) {
-
             Scanner mainScanner = new Scanner(System.in);
             displayHomePage();
             System.out.println("enter selection:");
@@ -48,7 +53,6 @@ public class Main {
                     displayProduct();
                     break;
                 case SEARCH_PRODUCT:
-
                     searchProduct();
                 case EXIT:
                     break;
@@ -62,6 +66,155 @@ public class Main {
     /*************************************************************************************
      *************************** SUPPORT FUNCTION  ***************************************
      ***************************************************************************************/
+
+    static void clientAddProductToCart(){
+        System.out.println("Nhập tên sản phẩm: ");
+        String name = scanner.nextLine();
+        System.out.println("Nhập số lượng sản phẩm: ");
+        int quantity = Integer.parseInt(scanner.nextLine());
+        for (Client client : serviceManager.listClientInService) {
+            if(client.getAccount().equals(serviceManager.client.getAccount())){
+                client.addToCart(name,quantity);
+            }
+        }
+        serviceManager.readClientList();
+        serviceManager.writeClientList();
+
+    }
+    static void removeProduct(){
+        System.out.println("Nhập tên sản phẩm cần xóa: ");
+        String name = scanner.nextLine();
+        System.out.println("Bạn có chắc chắn muốn xóa:");
+        System.out.println("1.YES");
+        System.out.println("THE REST OF: NO");
+        int choiceRemoveProduct = Integer.parseInt(scanner.nextLine());
+        if(choiceRemoveProduct == 1){
+            serviceManager.storeManager.managerRemoveProduct(name);
+        }else{
+            System.out.println("Hoàn tác! ");
+        }
+
+    }
+
+    static void updateQuantityProduct(){
+        System.out.println("Nhập tên sản phẩm");
+        String name = scanner.nextLine();
+        System.out.println("Nhập số lượng sản phẩm");
+        int quantity = Integer.parseInt(scanner.nextLine());
+        serviceManager.storeManager.managerUpdateQuantity(name,quantity);
+    }
+
+    static void updatePriceProduct(){
+        System.out.println("Nhập tên sản phẩm");
+        String name = scanner.nextLine();
+        System.out.println("Nhập giá sản phẩm");
+        int price = Integer.parseInt(scanner.nextLine());
+        serviceManager.storeManager.managerUpdateQuantity(name,price);
+    }
+
+    static void storeManagerAddProduct(){
+        final int MALE =1;
+        final int FEMALE =2;
+        final int CHILDREN =3;
+        System.out.println("Nhập tên sản phẩm: ");
+        String name = scanner.nextLine();
+        System.out.println("Nhập size sản phẩm: ");
+        String size = scanner.nextLine();
+        System.out.println("Nhập giá của sản phẩm");
+        int price = Integer.parseInt(scanner.nextLine());
+        System.out.println("Nhập số lượng sản phẩm");
+        int quantity = Integer.parseInt(scanner.nextLine());
+        System.out.println("Nhập loại sản phẩm:");
+
+        System.out.println("1.MALE");
+        System.out.println("2.FEMALE");
+        System.out.println("3.CHILDREN");
+        int type = Integer.parseInt(scanner.nextLine());
+        TypeProduct.SexType sexType;
+        switch (type){
+            case MALE:
+                sexType = TypeProduct.SexType.MALE;
+                break;
+            case FEMALE:
+                sexType = TypeProduct.SexType.FEMALE;
+                break;
+            case CHILDREN:
+                sexType = TypeProduct.SexType.CHILDREN;
+                break;
+            default:
+                System.out.println("Nhập sai giá trị");
+
+                return;
+        }
+
+        Product product = new Product(name, size,  price,  quantity, new
+                TypeProduct(sexType,"Áo","xanh"));
+        serviceManager.storeManager.managerAddProduct(product);
+    }
+    static void changePasswordHRM(){
+        serviceManager.readClientList();
+        for (HRM hrm : serviceManager.listHRMInService) {
+            if(hrm.getAccount().equals(serviceManager.accountUser)){
+                System.out.println("Nhập mật khẩu mới");
+                String password = scanner.nextLine();
+                System.out.println("Nhập lại mật khẩu mới");
+                String passwordConfirm = scanner.nextLine();
+
+                if(!password.equals(passwordConfirm)){
+                    System.out.println("Mật khẩu không trùng khớp");
+                }else{
+                    hrm.setPassword(password);
+                    serviceManager.writeHRMList();
+                    System.out.println("Thay đổi mật khẩu thành công");
+                }
+            }
+        }
+    }
+
+    static void revenueManager(){
+        final int SALARY_MEMBER =1;
+        final int REVENUE_CREATION =2;
+        final int DISPLAY_DAY_REVENUE =3;
+        final int TOTAL_REVENUE =4;
+        final int RESET_REVENUE =5;
+        int optionRevenueManager = DEFAULT_VALUE;
+        while (optionRevenueManager!=EXIT){
+            System.out.println("""
+                    ----------------------------------------
+                    |1.Hiển thị lương các thành viên       |
+                    |2.Tạo doanh thu cho ngày mới          |
+                    |3.Hiển thị doanh thu từng ngày        |
+                    |4.Hiển thị toàn bộ doanh thu          |         
+                    |5.Reset doanh thu                     |
+                    |0.EXIT
+                    ---------------------------------------|
+                    """);
+            optionRevenueManager = Integer.parseInt(scanner.nextLine());
+            switch(optionRevenueManager){
+                case SALARY_MEMBER:
+                    serviceManager.hrm.displaySalaryAllEmployee();
+                    break;
+                case REVENUE_CREATION:
+                    serviceManager.hrm.hrmAddNewRevenue(0);
+                    break;
+                case DISPLAY_DAY_REVENUE:
+                    serviceManager.hrm.hrmDisplayRevenue();
+                    break;
+                case TOTAL_REVENUE:
+                    System.out.println("Tổng Doanh thu: "+serviceManager.hrm.totalRevenue());
+                    break;
+                case RESET_REVENUE:
+                    serviceManager.hrm.hrmClearRevenue();
+                    break;
+                case EXIT:
+                    break;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ");
+
+
+            }
+        }
+    }
     static void updateUserInformation() {
         System.out.println("Nhập account cần cập nhật thông tin");
         String account = scanner.nextLine();
@@ -268,12 +421,49 @@ public class Main {
         //TODO
     }
 
-    static void displayChoiceHRMHandle() {
-
-    }
 
     static void storeManagerHandleLoginSuccess() {
-        //TODO
+        final int ADD_PRODUCT = 1;
+        final int UPDATE_PRODUCT_BY_QUANTITY = 2;
+        final int UPDATE_PRODUCT_BY_PRICE = 3;
+        final int REMOVE_PRODUCT = 4;
+
+        serviceManager.storeManager = new StoreManager
+                (ServiceManager.nameUser, "temp_id", ServiceManager.accountUser, "temp_password");
+        int optionStoreHandleHandle = DEFAULT_VALUE;
+        while(optionStoreHandleHandle!=EXIT){
+            System.out.println("""
+                    ----------------------------------------
+                    |1.Thêm sản phẩm                       |
+                    |2.Update số lượng sản phẩm            |
+                    |3.Update giá sản phẩm                 |
+                    |4 Xóa sản phẩm                        |
+                    |5.Đổi mật khẩu                        |
+                    |0.LOGOUT                              |
+                    ---------------------------------------|
+                    """);
+            System.out.println("Nhập lựa chọn");
+            optionStoreHandleHandle = Integer.parseInt(scanner.nextLine());
+            switch (optionStoreHandleHandle){
+                case ADD_PRODUCT:
+                    storeManagerAddProduct();
+                    break;
+                case UPDATE_PRODUCT_BY_QUANTITY:
+                    updateQuantityProduct();
+                    break;
+                case UPDATE_PRODUCT_BY_PRICE:
+                    updatePriceProduct();
+                    break;
+                case REMOVE_PRODUCT:
+                    removeProduct();
+                    break;
+                case EXIT:
+                    break;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ");
+            }
+
+        }
     }
 
     static void carrierHandleLoginSuccess() {
@@ -281,7 +471,31 @@ public class Main {
     }
 
     static void clientHandleLoginSuccess() {
-        //TODO
+        final int ADD_FINAL = 1;
+        serviceManager.client = new Client
+                (ServiceManager.nameUser, "temp_id", ServiceManager.accountUser, "temp_password");
+        System.out.println(ServiceManager.nameUser+ServiceManager.accountUser);
+        int optionClientHandle = DEFAULT_VALUE;
+        while(optionClientHandle!=EXIT){
+            System.out.println("""
+                    ----------------------------------------
+                    |1.Thêm sản phẩm vào giỏ               |
+                    |0.LOGOUT                              |
+                    ---------------------------------------|
+                    """);
+            System.out.println("Nhập lựa chọn: ");
+            optionClientHandle = Integer.parseInt(scanner.nextLine());
+            switch (optionClientHandle){
+                case ADD_FINAL:
+                    clientAddProductToCart();
+                    break;
+                case EXIT:
+                    break;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ");
+            }
+
+        }
     }
 
     static void hrmHandleLoginSuccess() {
@@ -311,16 +525,16 @@ public class Main {
                     accountManager();
                     break;
                 case REVENUE_MANAGER:
-                    //TODO
+                    revenueManager();
                     break;
                 case TIME_KEEPING:
-                    //TODO
+                    serviceManager.hrm.timeKeeping();
                     break;
                 case EMPLOYEE_SALARY:
-                    //TODO
+                    serviceManager.hrm.displaySalaryAllEmployee();
                     break;
                 case PASSWORD_HRM_CHANGE:
-                    //TODO
+                    changePasswordHRM();
                     break;
                 case EXIT:
                     break;
@@ -404,17 +618,20 @@ public class Main {
                     adminHandleLoginSuccess();
                     break;
                 case HRM:
-                    hrmHandleLoginSuccess();
                     System.out.println("HR: " + ServiceManager.nameUser);
+                    hrmHandleLoginSuccess();
                     break;
                 case STORE_MANAGER:
                     System.out.println("store manager: " + ServiceManager.nameUser);
+                    storeManagerHandleLoginSuccess();
                     break;
                 case CARRIER:
                     System.out.println("carrier: " + ServiceManager.nameUser);
+                    carrierHandleLoginSuccess();
                     break;
                 case CLIENT:
                     System.out.println("client: " + ServiceManager.nameUser);
+                    clientHandleLoginSuccess();
                     break;
                 default:
                     break;
