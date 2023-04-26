@@ -23,7 +23,7 @@ public class ServiceManager implements Serializable {
     public static String nameUser;
 
 
-    ClassifyUser classifyUser;
+    public static ClassifyUser classifyUser;
      public StoreManager storeManager ;
      public Client client;
      public Carrier carrier;
@@ -136,10 +136,13 @@ public class ServiceManager implements Serializable {
 
     }
 
-    public ClassifyUser validateTypeAccount(String account,String password){
+    public ClassifyUser validateTypeAccountWhenLogin(String account,String password){
         for (Admin admin : listAdminInService) {
             if(account.equals(admin.getAccount())){
                 if(admin.getPassword().equals(password)){
+                    ServiceManager.classifyUser = ServiceManager.ClassifyUser.ADMIN;
+                    ServiceManager.accountUser = account;
+                    ServiceManager.nameUser = admin.getName();
                     return ClassifyUser.ADMIN;
                 }else{
                     return null;
@@ -150,6 +153,9 @@ public class ServiceManager implements Serializable {
         for (HRM hrm : listHRMInService) {
             if(account.equals(hrm.getAccount())){
                 if(hrm.getPassword().equals(password)){
+                    ServiceManager.classifyUser = ServiceManager.ClassifyUser.HRM;
+                    ServiceManager.accountUser = account;
+                    ServiceManager.nameUser = hrm.getName();
                     return ClassifyUser.HRM;
                 }else{
                     return null;
@@ -159,6 +165,9 @@ public class ServiceManager implements Serializable {
         for (StoreManager storeManager : listStoreManagerInService) {
             if(account.equals(storeManager.getAccount())){
                 if(storeManager.getPassword().equals(password)){
+                    ServiceManager.classifyUser = ClassifyUser.STORE_MANAGER;
+                    ServiceManager.accountUser = account;
+                    ServiceManager.nameUser = storeManager.getName();
                     return ClassifyUser.STORE_MANAGER;
                 }else{
                     return null;
@@ -169,6 +178,9 @@ public class ServiceManager implements Serializable {
         for (Carrier carrier : listCarrierInService) {
             if(account.equals(carrier.getAccount())){
                 if(carrier.getPassword().equals(password)){
+                    ServiceManager.classifyUser = ClassifyUser.CARRIER;
+                    ServiceManager.accountUser = account;
+                    ServiceManager.nameUser = carrier.getName();
                     return ClassifyUser.CARRIER;
                 }else{
                     return null;
@@ -178,6 +190,9 @@ public class ServiceManager implements Serializable {
         for (Client client : listClientInService) {
             if(account.equals(client.getAccount())){
                 if(client.getPassword().equals(password)){
+                    ServiceManager.classifyUser = ClassifyUser.CLIENT;
+                    ServiceManager.accountUser = account;
+                    ServiceManager.nameUser = client.getName();
                     return ClassifyUser.CLIENT;
                 }else{
                     return null;

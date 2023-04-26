@@ -158,6 +158,7 @@ public class HRM extends User implements Serializable, Payroll {
                 if (index >= 0) {
                     listClient.remove(index);
                     writeClientList();
+                    System.out.println("Xoá tài khoản thành công");
                 }else{
                     System.out.println("Không tồn tại account "+account + " trong client list");
                 }
@@ -167,6 +168,7 @@ public class HRM extends User implements Serializable, Payroll {
                 if (index >= 0) {
                     listCarrier.remove(index);
                     writeCarrierList();
+                    System.out.println("Xoá tài khoản thành công");
                 }else{
                     System.out.println("Không tồn tại account "+account + " trong carrier list");
                 }
@@ -176,6 +178,7 @@ public class HRM extends User implements Serializable, Payroll {
                 if (index >= 0) {
                     listStoreManager.remove(index);
                     writeStoreManagerList();
+                    System.out.println("Xoá tài khoản thành công");
                 }else{
                     System.out.println("Không tồn tại account "+account + " trong store manager list");
                 }
@@ -183,7 +186,6 @@ public class HRM extends User implements Serializable, Payroll {
             default:
                 System.out.println("Không xóa account:"+account);
                 break;
-
         }
 
     }
@@ -226,7 +228,9 @@ public class HRM extends User implements Serializable, Payroll {
                 if (client.getAccount().equals(account)) {
                     client.setPassword(clientUpdate.getPassword());
                     client.setName(clientUpdate.getName());
+                    System.out.println("Cập nhật client thành công");
                     break;
+
                 }
             }
             writeClientList();
@@ -247,6 +251,7 @@ public class HRM extends User implements Serializable, Payroll {
                     carrier.setCoefficient(carrierUpdate.getCoefficient());
                     carrier.setBasicSalary(carrierUpdate.getBasicSalary());
                     carrier.setWorkingDay(carrierUpdate.getWorkingDay());
+                    System.out.println("Cập nhật carrier thành công");
                     break;
                 }
             }
@@ -266,6 +271,7 @@ public class HRM extends User implements Serializable, Payroll {
                     storeManager.setCoefficient(storeManagerUpdate.getCoefficient());
                     storeManager.setBasicSalary(storeManagerUpdate.getBasicSalary());
                     storeManager.setWorkingDay(storeManagerUpdate.getWorkingDay());
+                    System.out.println("Cập nhật store manager thành công");
                     break;
                 }
             }
